@@ -8,9 +8,10 @@ where
 import Data.List.Split (splitWhen)
 import Elves (ElvesNotes)
 import RockPaperScisors (Move (..), Result (..))
+import Text.Read (readMaybe) -- Not sure if this is the best way to :: String -> Maybe Int
 
-parseElvesNotes :: String -> ElvesNotes
-parseElvesNotes = map (map read) . splitWhen (== "") . lines
+parseElvesNotes :: String -> Maybe ElvesNotes
+parseElvesNotes = mapM (mapM readMaybe) . splitWhen (== "") . lines
 
 parseMovesStrategyGuide :: String -> Maybe [(Move, Move)]
 parseMovesStrategyGuide = mapM (parseMovesStrategyGuideLine . words) . lines
